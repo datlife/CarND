@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd964525-bca7-4d0f-a071-7ec84a4189b8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/P1_example.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/challenge.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/conda" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/laneLines_thirdPass.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/line-segments-example.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/raw-lines-example.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/solidWhiteRight.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/solidYellowLeft.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/solidWhiteCurve.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/solidWhiteRight.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/solidYellowCurve.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/solidYellowCurve2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/solidYellowLeft.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/test_images/whiteCarLaneSwitch.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/exit-ramp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/test.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/P1.ipynb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Project1_LaneDetection/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/Quiz1_ColorSelection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/Quiz2_ColorRegion.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/Quiz3_IntroCV.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Week1/quiz3_houghtransformation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Project1_LaneDetection/white.mp4" afterPath="$PROJECT_DIR$/Project1_LaneDetection/white.mp4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Project1_LaneDetection/Project1_Lane_Finding.ipynb" afterPath="$PROJECT_DIR$/Project1_LaneDetection/Project1_Lane_Finding.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Project1_LaneDetection/submission_official.py" afterPath="$PROJECT_DIR$/Project1_LaneDetection/submission_official.py" />
     </list>
     <ignored path="CarND.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,6 +23,7 @@
     <SUITE FILE_PATH="coverage/CarND$submission_beta.coverage" NAME="submission_beta Coverage Results" MODIFIED="1480931415332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1_LaneDetection" />
     <SUITE FILE_PATH="coverage/CarND$Quiz1_ColorSelection.coverage" NAME="Quiz1_ColorSelection Coverage Results" MODIFIED="1480581063471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Week1" />
     <SUITE FILE_PATH="coverage/CarND$Quiz3_IntroCV.coverage" NAME="Quiz3_IntroCV Coverage Results" MODIFIED="1480837340655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Week1" />
+    <SUITE FILE_PATH="coverage/CarND$submission_official.coverage" NAME="submission_official Coverage Results" MODIFIED="1481025762461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1_LaneDetection" />
     <SUITE FILE_PATH="coverage/CarND$quiz3_houghtransformation.coverage" NAME="quiz3_houghtransformation Coverage Results" MODIFIED="1480845768018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Week1" />
     <SUITE FILE_PATH="coverage/CarND$Quiz2_ColorRegion.coverage" NAME="Quiz2_ColorRegion Coverage Results" MODIFIED="1480753338942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Week1" />
   </component>
@@ -55,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="submission_beta.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="submission_beta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1_LaneDetection/submission_beta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="148" column="31" selection-start-line="148" selection-start-column="31" selection-end-line="148" selection-end-column="31" />
+            <state relative-caret-position="640">
+              <caret line="117" column="32" selection-start-line="117" selection-start-column="12" selection-end-line="117" selection-end-column="32" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -67,10 +48,32 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="submission_official.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Project1_LaneDetection/submission_official.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="434">
+              <caret line="200" column="0" selection-start-line="200" selection-start-column="0" selection-end-line="203" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Quiz3_IntroCV.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Week1/Quiz3_IntroCV.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="_base.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/anaconda3/envs/tensorflow/lib/python3.5/site-packages/matplotlib/axes/_base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="3330">
               <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
               <folding />
             </state>
@@ -80,8 +83,8 @@
       <file leaf-file-name="quiz3_houghtransformation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Week1/quiz3_houghtransformation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+            <state relative-caret-position="32">
+              <caret line="42" column="86" selection-start-line="42" selection-start-column="71" selection-end-line="42" selection-end-column="86" />
               <folding>
                 <element signature="e#342#359#0" expanded="true" />
               </folding>
@@ -111,6 +114,7 @@
         <option value="$PROJECT_DIR$/CarND-LaneLines-P1/P1.ipynb" />
         <option value="$PROJECT_DIR$/CarND-LaneLines-P1/README.md" />
         <option value="$PROJECT_DIR$/Project1_LaneDetection/submission_beta.py" />
+        <option value="$PROJECT_DIR$/Project1_LaneDetection/submission_official.py" />
       </list>
     </option>
   </component>
@@ -121,10 +125,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="x" value="1985" />
+    <option name="y" value="-4" />
     <option name="width" value="1855" />
-    <option name="height" value="1176" />
+    <option name="height" value="1204" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -151,6 +155,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -207,7 +212,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -217,25 +221,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CISF003A-Python" />
   </component>
-  <component name="RunManager" selected="Python.submission_beta">
-    <configuration default="false" name="Quiz1_ColorSelection" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Week1" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="CarND" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Week1/Quiz1_ColorSelection.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.submission_official">
     <configuration default="false" name="Quiz2_ColorRegion" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -304,6 +290,24 @@
       <module name="CarND" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Project1_LaneDetection/submission_beta.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="submission_official" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Project1_LaneDetection" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="CarND" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Project1_LaneDetection/submission_official.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -517,19 +521,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Quiz1_ColorSelection" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Quiz2_ColorRegion" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Quiz3_IntroCV" />
-      <item index="3" class="java.lang.String" itemvalue="Python.quiz3_houghtransformation" />
-      <item index="4" class="java.lang.String" itemvalue="Python.submission_beta" />
+      <item index="0" class="java.lang.String" itemvalue="Python.Quiz2_ColorRegion" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Quiz3_IntroCV" />
+      <item index="2" class="java.lang.String" itemvalue="Python.quiz3_houghtransformation" />
+      <item index="3" class="java.lang.String" itemvalue="Python.submission_beta" />
+      <item index="4" class="java.lang.String" itemvalue="Python.submission_official" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.submission_beta" />
-        <item index="1" class="java.lang.String" itemvalue="Python.quiz3_houghtransformation" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Quiz3_IntroCV" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Quiz2_ColorRegion" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Quiz1_ColorSelection" />
+        <item index="0" class="java.lang.String" itemvalue="Python.submission_official" />
+        <item index="1" class="java.lang.String" itemvalue="Python.submission_beta" />
+        <item index="2" class="java.lang.String" itemvalue="Python.quiz3_houghtransformation" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Quiz3_IntroCV" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Quiz2_ColorRegion" />
       </list>
     </recent_temporary>
   </component>
@@ -547,7 +551,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="1176" extended-state="6" />
+    <frame x="1985" y="-4" width="1855" height="1204" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18490566" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -556,7 +560,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23578751" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23524068" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -595,13 +599,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Week1/Quiz1_ColorSelection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Week1/Quiz2_ColorRegion.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1224">
@@ -851,13 +848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Week1/Quiz3_IntroCV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CarND-LaneLines-P1/P1.ipynb" />
     <entry file="file://$PROJECT_DIR$/CarND-LaneLines-P1/README.md" />
     <entry file="file://$PROJECT_DIR$/Project1_LaneDetection/P1.ipynb">
@@ -871,7 +861,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="862">
           <caret line="562" column="0" selection-start-line="562" selection-start-column="0" selection-end-line="562" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,7 +875,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="310" column="0" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -916,16 +904,24 @@
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/tensorflow/lib/python3.5/site-packages/matplotlib/axes/_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="3330">
           <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Week1/Quiz3_IntroCV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Week1/quiz3_houghtransformation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+        <state relative-caret-position="32">
+          <caret line="42" column="86" selection-start-line="42" selection-start-column="71" selection-end-line="42" selection-end-column="86" />
           <folding>
             <element signature="e#342#359#0" expanded="true" />
           </folding>
@@ -934,8 +930,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project1_LaneDetection/submission_beta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="148" column="31" selection-start-line="148" selection-start-column="31" selection-end-line="148" selection-end-column="31" />
+        <state relative-caret-position="640">
+          <caret line="117" column="32" selection-start-line="117" selection-start-column="12" selection-end-line="117" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project1_LaneDetection/submission_official.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="200" column="0" selection-start-line="200" selection-start-column="0" selection-end-line="203" selection-end-column="20" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

@@ -139,7 +139,7 @@ def calculate_slope(line):
     return slope
 
 
-def update_line_boundary(line_segment, curr_max, curr_min):
+def update_boundary(line_segment, curr_max, curr_min):
     """
     Update max point and min point of the line
     """
@@ -158,38 +158,53 @@ def update_line_boundary(line_segment, curr_max, curr_min):
 
     return [curr_max, curr_min]
 
-
-def calculate_intercept(max_point, min_point, avg_slope):
-    """
-    find new intercept y for max and min point relative to average slope
-
-    y = kx + b
-
-    """
-    slope = (max_point[1] - min_point[1]) / (max_point[0] - min_point[0])
-    b = max_point[1] - slope * max_point[0]
-
-    # Update new intercept relavtive to average slope
-    max_point[0] = int(avg_slope * max_point[1] + b)
-    min_point[0] = int(avg_slope * min_point[1] + b)
-
     return (max_point, min_point)
 
 
-def fit_line(img, line):
+def get_line(slope, points, y_max, yaxis):
     """
-    Add line to image
-    :param img:
-    :param line:
-    :return:
     """
-    cols = img.shape[1]
-    [vx, vy, x, y] = cv2.fitLine(line, cv2.DIST_L2, 0, 0.01, 0.01)
-    slope = (vy - y) / (vx - x)
-    lefty = int((-x * vy / vx) + y)
-    righty = int(((cols - x) * vy / vx) + y)
-    cv2.line(img, (cols - slope, righty), (0, lefty), (255, 0, 0), 10)
-    return img
+    if len(points) > 0:
+        # fit = [slope intercept]
+        x = np.transpose(points)[0]
+        y = np.transpose(points)[1]
+        fit = np.polyfit(x, y, 1)
+
+        # calculate average
+        avg_x = np.median(np.transpose(points)[0])
+        avg_y = slope * avg_x + fit[1]
+
+        # find y-intercept
+        y_inter = slope * 0 + fit[1]
+        if math.isnan(y_inter):
+            y_inter = yaxis
+        # Calculate x_max
+        x_max = y_max - y_inter
+        x_max = x_max / fit[0]
+        y_max = x_max * slope + fit[1]
+
+        # Calculate X_min
+        x_min = yaxis - fit[1]
+        x_min = x_min / fit[0]
+
+        x_max = int(x_max)
+        x_min = int(x_min)
+        if math.isinf(y_max):
+            y_max = int(yaxis * 0.5)
+
+        line = np.array([[x_max, int(y_max), x_min, int(yaxis)]])
+        return line
+    else:
+        return np.array([[0, 0, 0, 0]])
+
+
+def caldist(line):
+    for x1,y1, x2, y2 in line:
+        distance = math.sqrt((x1-x2)**2 + (y1-y2)**2)
+     return distance
+
+def smooth_slope(new, prev, alpha):
+    return alpha * new + (1 - alpha) * prev
 
 
 def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
@@ -209,7 +224,7 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
 
 if __name__ == "__main__":
 
-    image = (mpimg.imread('challenge2.png')*255).astype('unint8')
+    image = (mpimg.imread('challenge2.png')*255).astype('uint8')
     plt.imshow(image)
     print('This image is:', type(image), 'with dimensions:', image.shape)
 
@@ -230,49 +245,68 @@ if __name__ == "__main__":
 
     max_right = [0, 0]
     min_right = [xsize, ysize]
-
+    right_points =[]
+    left_points =[]
     # Initial slopes
-    slopes = []
     right_slopes = []
     left_slopes = []
 
     # Apply Canny Edge Detection
-    edges = edge_detector(image, 3, 350, 130)
+    canny = edge_detector(image, 7, 50, 125)
 
     # Mask a Region Of Interest
-    edges = region_of_interest(edges, vertices)
-    print(edges.shape)
+    edges = region_of_interest(canny, vertices)
+
+    color_edges = np.dstack((edges, edges, edges))
 
     # Hough Transform
-    h_lines = find_hough_lines(edges, 10, 130, 10)
+    h_lines = find_hough_lines(edges, 25, 50, 200)
     plt.imshow(edges, cmap='gray')
 
     for line in h_lines:
         slope = calculate_slope(line)
         if slope > 0:
             right_slopes.append(slope)
-            [max_right, min_right] = update_line_boundary(line, max_right, min_right)
+            for x1, y1, x2, y2 in line:
+                right_points.append((x1, y1))
+                right_points.append((x2, y2))
+            [max_right, min_right] = update_boundary(line, max_right, min_right)
         if slope < 0:
             left_slopes.append(slope)
-            [max_left, min_left] = update_line_boundary(line, max_left, min_left)
+            for x1, y1, x2, y2 in line:
+                left_points.append((x1, y1))
+                left_points.append((x2, y2))
+            [max_left, min_left] = update_boundary(line, max_left, min_left)
 
-    # print(right_slopes)
-    # print(left_slopes)
-    # print(average_right_slope, average_left_slope)
-    print(max_right, min_right)
-    print(max_left, min_left)
+    # Calculate Lines
+    right_slope = np.median(right_slopes)
+    left_slope = np.median(left_slopes)
 
-    average_right_slope = np.median(right_slopes)
-    average_left_slope = np.median(left_slopes)
-    color_edges = np.dstack((edges, edges, edges))
+    # To avoid float infinity
+    y_max = xsize * 0.55
+    if xsize * 0.55 > max_left[1] >= max_right[1]:
+        y_max = max_left[1]
+    elif xsize * 0.55 > max_right[1] > max_left[1]:
+        y_max = max_right[1]
+    left_line = get_line(left_slope, left_points, y_max, xsize)
+    right_line = get_line(right_slope, right_points, y_max, xsize)
 
-    right_line = np.array([[max_right[0], max_right[1], min_right[0], min_right[1]]])
-    left_line = np.array([[max_left[0], max_left[1], min_left[0], min_left[1]]])
+    line_image = draw_line_segments(np.copy(image) * 0, [left_line], [255, 0, 255], 20)
+    line_image = draw_line_segments(line_image, [right_line], [255, 0, 0], 20)
+    line_image = region_of_interest(line_image, vertices)
+    result = weighted_img(image, line_image)
 
-    line_image = draw_line_segments(color_edges, [right_line], [255, 0, 0], 10)
-    line_image = draw_line_segments(line_image, [left_line], [255, 0, 0], 15)
+    # Display all line
 
-    # Draw the lines on the edge image
-    lines_edges = weighted_img(color_edges, line_image)
-    plt.imshow(lines_edges)
+    plt.figure(1)
+    print("Original Image: ")
+    plt.imshow(image)
+
+    plt.figure(2)
+    print("Canny Edge and Hough Transform:")
+    plt.imshow(edges, cmap='gray')
+
+    plt.figure(3)
+    print("Result:")
+    plt.imshow(result)
     plt.show()
