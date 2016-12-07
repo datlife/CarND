@@ -10,30 +10,12 @@ from moviepy.editor import VideoFileClip
 from IPython.display import HTML
 
 
-def draw_lanes(source_img, lines, color=[255, 0, 0], thickness=2):
-    """
-    Draw left and right lines to the image
-
-    :param source_img : a source image
-    :param lines      : a list of lines
-    :param color      : color of the line
-    :param thickness  : thickness of the line
-
-    :return: an image with lines on it
-    """
-
-    img = np.copy(source_img)
-
-    return img
-
-
 def draw_line_segments(source_image, h_lines, color=[255, 0, 0], thickness=2):
     """
     Draw the line segments to the source images.
     """
 
     line_img = np.copy(source_image)
-
     for a_line in h_lines:
         for x1, y1, x2, y2 in a_line:
             cv2.line(line_img, (x1, y1), (x2, y2), color, thickness)
@@ -104,6 +86,29 @@ def region_of_interest(img, vertices):
     return masked_edges
 
 
+def hsv_filter(image):
+    """
+    Convert image to HSV color space to extract white and yellow color
+    :param image:
+    :return:
+    """
+    # http://stackoverflow.com/questions/10948589/choosing-correct-hsv-values-for-opencv-thresholding-with-inranges
+
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    YELLOW_MIN = np.array([100, 100, 150], dtype='uint8')
+    YELLOW_MAX =np.array([50, 255, 255], dtype ='uint8')
+
+    mask = cv2.inRange(hsv,  YELLOW_MIN,  YELLOW_MAX)
+
+    #mask = cv2.addWeighted(mask, 1.0, mask2, 1.0, 0.0)
+    plt.figure(5)
+    plt.imshow(hsv)
+    plt.figure(4)
+    plt.imshow(mask)
+
+    return mask
+
+
 def adaptive_equalize_image(img, level):
     """
     Equalize an image - Increase contrast for the image
@@ -165,43 +170,61 @@ def get_line(slope, points, y_max, yaxis):
     """
     """
     if len(points) > 0:
-        # fit = [slope intercept]
+
+        # filter out points
         x = np.transpose(points)[0]
         y = np.transpose(points)[1]
-        fit = np.polyfit(x, y, 1)
+        # fit = np.polyfit(x, y, 1)
 
-        # calculate average
-        avg_x = np.median(np.transpose(points)[0])
-        avg_y = slope * avg_x + fit[1]
+        # avg_point:
+        avg_x = np.mean(x)
+        avg_y = np.mean(y)
+        intercept = avg_y - slope*avg_x
 
-        # find y-intercept
-        y_inter = slope * 0 + fit[1]
-        if math.isnan(y_inter):
-            y_inter = yaxis
-        # Calculate x_max
-        x_max = y_max - y_inter
-        x_max = x_max / fit[0]
-        y_max = x_max * slope + fit[1]
+        # bottom_point
+        x_btm = int((yaxis - intercept)/slope)
+        y_btm = int(yaxis)
 
-        # Calculate X_min
-        x_min = yaxis - fit[1]
-        x_min = x_min / fit[0]
+        # top_point
+        x_top = int((y_max - intercept)/slope)
 
-        x_max = int(x_max)
-        x_min = int(x_min)
-        if math.isinf(y_max):
-            y_max = int(yaxis * 0.5)
-
-        line = np.array([[x_max, int(y_max), x_min, int(yaxis)]])
+        line = np.array([[x_btm, int(y_btm), x_top, y_max]], dtype='uint8')
         return line
     else:
         return np.array([[0, 0, 0, 0]])
 
-
-def caldist(line):
+math.pow
+def cal_dist(line):
     for x1,y1, x2, y2 in line:
-        distance = math.sqrt((x1-x2)**2 + (y1-y2)**2)
-     return distance
+        return (x1-x2)**2 + (y1-y2)**2
+
+def avg_slope(slopes):
+    """
+    calculate avg slope based on the length of the edge (weight).
+    The longer edge, the more it affects the avg slope
+    """
+    slope = np.transpose(slopes)[0]
+    weight = np.transpose(slopes)[1]
+
+    mul_sw = np.sum(np.multiply(slope, weight))
+    sum_w = np.sum(weight)
+
+    avg_slope = mul_sw/sum_w
+
+    return avg_slope
+
+
+def hsv_convert(image):
+
+    # Conver BGR to LAB
+    lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+    l, a, b = cv2.split(lab)
+    cl = adaptive_equalize_image(l, 3.0)
+    equalized = cv2.merge((cl, a, b))
+
+    # Convert to HSV image
+    hsv = cv2.cvtColor(equalized, cv2.COLOR_BGR2HSV)
+
 
 def smooth_slope(new, prev, alpha):
     return alpha * new + (1 - alpha) * prev
@@ -222,34 +245,23 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     return cv2.addWeighted(initial_img, α, img, β, λ)
 
 
-if __name__ == "__main__":
-
-    image = (mpimg.imread('challenge2.png')*255).astype('uint8')
-    plt.imshow(image)
-    print('This image is:', type(image), 'with dimensions:', image.shape)
-
+def pipeline(image):
+    """
+    Main pipeline
+    :param image:
+    :return:
+    """
     im_shape = image.shape
-    xsize = im_shape[0]
-    ysize = im_shape[1]
-
+    x_size = im_shape[0]
+    y_size = im_shape[1]
     # Points of polygon
-    left_top = (ysize * 0.55, xsize * 0.5)
-    right_top = (ysize * 0.5, xsize * 0.5)
-    left_bottom = (0, xsize)
-    right_bottom = (ysize, xsize)
-    vertices = np.array([[left_top, right_top, left_bottom, right_bottom]], dtype=np.int32)
+    left_top = (y_size * 0.46, x_size * 0.55)
+    left_bottom = (0 + y_size * 0.12, x_size)
+    right_top = (y_size * 0.52, x_size * 0.55)
+    right_bottom = (y_size - y_size * 0.07, x_size)
+    vertices = np.array([[left_top, right_top, right_bottom, left_bottom]], dtype=np.int32)
 
-    # Initial points
-    max_left = [xsize, ysize]
-    min_left = [0, 0]
-
-    max_right = [0, 0]
-    min_right = [xsize, ysize]
-    right_points =[]
-    left_points =[]
-    # Initial slopes
-    right_slopes = []
-    left_slopes = []
+    # hsv = hsv_filter(image)
 
     # Apply Canny Edge Detection
     canny = edge_detector(image, 7, 50, 125)
@@ -257,47 +269,24 @@ if __name__ == "__main__":
     # Mask a Region Of Interest
     edges = region_of_interest(canny, vertices)
 
-    color_edges = np.dstack((edges, edges, edges))
-
-    # Hough Transform
+    # Hough-Transform
     h_lines = find_hough_lines(edges, 25, 50, 200)
-    plt.imshow(edges, cmap='gray')
 
-    for line in h_lines:
-        slope = calculate_slope(line)
-        if slope > 0:
-            right_slopes.append(slope)
-            for x1, y1, x2, y2 in line:
-                right_points.append((x1, y1))
-                right_points.append((x2, y2))
-            [max_right, min_right] = update_boundary(line, max_right, min_right)
-        if slope < 0:
-            left_slopes.append(slope)
-            for x1, y1, x2, y2 in line:
-                left_points.append((x1, y1))
-                left_points.append((x2, y2))
-            [max_left, min_left] = update_boundary(line, max_left, min_left)
+    right_points, left_points, right_slopes, left_slopes = process_lines(h_lines)
 
     # Calculate Lines
     right_slope = np.median(right_slopes)
     left_slope = np.median(left_slopes)
 
     # To avoid float infinity
-    y_max = xsize * 0.55
-    if xsize * 0.55 > max_left[1] >= max_right[1]:
-        y_max = max_left[1]
-    elif xsize * 0.55 > max_right[1] > max_left[1]:
-        y_max = max_right[1]
-    left_line = get_line(left_slope, left_points, y_max, xsize)
-    right_line = get_line(right_slope, right_points, y_max, xsize)
+    y_max = x_size * 0.55
+    left_line = get_line(left_slope, left_points, y_max, x_size)
+    right_line = get_line(right_slope, right_points, y_max, x_size)
 
     line_image = draw_line_segments(np.copy(image) * 0, [left_line], [255, 0, 255], 20)
-    line_image = draw_line_segments(line_image, [right_line], [255, 0, 0], 20)
-    line_image = region_of_interest(line_image, vertices)
     result = weighted_img(image, line_image)
 
     # Display all line
-
     plt.figure(1)
     print("Original Image: ")
     plt.imshow(image)
@@ -305,6 +294,45 @@ if __name__ == "__main__":
     plt.figure(2)
     print("Canny Edge and Hough Transform:")
     plt.imshow(edges, cmap='gray')
+    # color_edges = np.dstack((edges, edges, edges))
+    return result
+
+
+def process_lines(hough_lines):
+    """
+
+    :param hough_lines:
+    :return:
+    """
+    # Initial points
+    right_points = []
+    left_points = []
+    # Initial slopes
+    right_slopes = []
+    left_slopes = []
+
+    for line in hough_lines:
+        slope = calculate_slope(line)
+        if slope > 0:
+            right_slopes.append(slope)
+            # how to eliminate bad point
+            for x1, y1, x2, y2 in line:
+                right_points.append((x1, y1))
+                right_points.append((x2, y2))
+        if slope < 0:
+            left_slopes.append(slope)
+            for x1, y1, x2, y2 in line:
+                left_points.append((x1, y1))
+                left_points.append((x2, y2))
+
+    return right_points, left_points, right_slopes, left_slopes
+
+if __name__ == "__main__":
+
+    image = (mpimg.imread('challenge2.png')*255).astype('uint8')
+    plt.imshow(image)
+
+    result = pipeline(image)
 
     plt.figure(3)
     print("Result:")
