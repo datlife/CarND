@@ -1,3 +1,6 @@
+from .Layer import Layer
+
+
 class Input(Layer):
     """
     Input Layer of a Neural Network

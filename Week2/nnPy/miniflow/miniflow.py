@@ -126,7 +126,6 @@ class Linear(Neuron):
         """
 
 
-
 def topological_sort(feed_dict):
     """
     Sort generic nodes in topological order using Kahn's Algorithm.
@@ -196,5 +195,4 @@ if __name__ == "__main__":
     # Return a list of outbound_neurons that add two input neurons
     output = forward_pass(f_add, sorted_neurons)
     print("{} + {} = {} (according to Mini flow)".format(feed_dict[x], feed_dict[y], output))
-
 
