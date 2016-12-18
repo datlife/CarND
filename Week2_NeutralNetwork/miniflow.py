@@ -106,6 +106,27 @@ class Add(Neuron):
                 self.value = n.value
 
 
+class Linear(Neuron):
+    """
+    Neuron that performs a Linear Calculation
+
+        OUTPUT = SUM(INPUT*WEIGHT) + BIAS
+
+    """
+    def __init__(self, inputs: list, weights: list, bias):
+
+        Neuron.__init__(self, inputs)
+        self.weights = weights
+        self.bias = bias
+
+    def forward(self):
+        """
+        Perform linear calculation
+        :return: self.value is updated
+        """
+
+
+
 def topological_sort(feed_dict):
     """
     Sort generic nodes in topological order using Kahn's Algorithm.
