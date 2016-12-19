@@ -2,7 +2,7 @@ from .Layer import Layer
 from .Linear import Linear
 from .Sigmoid import Sigmoid
 from .Input import Input
-
+from .MSE import MSE
 
 def topological_sort(feed_dict):
     """
