@@ -15,4 +15,7 @@ class Layer:
             layer.outbound_layers.append(self)
 
     def forward(self):
-        raise NotImplemented
+        raise NotImplementedError
+
+    def backward():
+        raise NotImplementedError

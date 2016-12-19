@@ -1,4 +1,7 @@
-from . import Input, Linear
+from .Layer import Layer
+from .Linear import Linear
+from .Sigmoid import Sigmoid
+from .Input import Input
 
 
 def topological_sort(feed_dict):

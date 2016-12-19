@@ -1,4 +1,5 @@
 from .Layer import Layer
+import numpy as np
 
 
 class Linear(Layer):
@@ -9,4 +10,4 @@ class Linear(Layer):
         inputs = self.inbound_layers[0].value
         weights = self.inbound_layers[1].value
         bias    = self.inbound_layers[2].value
-        self.outbound_layers = np.dot(inputs, weights) + bias
+        self.value = np.dot(inputs, weights) + bias
