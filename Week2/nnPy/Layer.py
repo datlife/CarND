@@ -11,11 +11,12 @@ class Layer:
         self.inbound_layers = inbound_layers
         self.value = None
         self.outbound_layers = []
+        self.gradients = {}
         for layer in inbound_layers:
             layer.outbound_layers.append(self)
 
     def forward(self):
         raise NotImplementedError
 
-    def backward():
+    def backward(self):
         raise NotImplementedError

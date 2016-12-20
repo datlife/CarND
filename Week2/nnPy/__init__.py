@@ -3,6 +3,8 @@ from .Linear import Linear
 from .Sigmoid import Sigmoid
 from .Input import Input
 from .MSE import MSE
+from .f import gradient_descent_update, f, df
+
 
 def topological_sort(feed_dict):
     """
@@ -62,3 +64,21 @@ def forward_pass(output_layer, sorted_layers):
         n.forward()
 
     return output_layer.value
+
+
+def forward_and_backward(graph):
+    """
+    Performs a forward pass and a backward pass through a list of sorted Layers.
+
+    Arguments:
+
+        `graph`: The result of calling `topological_sort`.
+    """
+    # Forward pass
+    for n in graph:
+        n.forward()
+
+    # Backward pass
+    # see: https://docs.python.org/2.3/whatsnew/section-slices.html
+    for n in graph[::-1]:
+        n.backward()

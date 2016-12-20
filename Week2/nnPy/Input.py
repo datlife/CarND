@@ -10,7 +10,6 @@ class Input(Layer):
     """
     def __init__(self):
         Layer.__init__(self)
-        self.gradient = {self: 0}
 
     def forward(self):
         """
@@ -20,9 +19,12 @@ class Input(Layer):
         pass
 
     def backward(self):
-        """
-        An Input Layer has no inputs so we refer to itself for the gradient
-        :return:
-        """
+        # An Input layer has no inputs so the gradient (derivative)
+        # is zero.
+        # The key, `self`, is reference to this object.
+        self.gradients = {self: 0}
+        # Weights and bias may be inputs, so you need to sum
+        # the gradient from output gradients.
         for n in self.outbound_layers:
-            self.gradient[self] += n.gradient[self]
+            grad_cost = n.gradients[self]
+            self.gradients[self] += grad_cost * 1

@@ -31,4 +31,20 @@ class Sigmoid(Layer):
         inputs = self.inbound_layers[0].value
         self.value = self._sigmoid(inputs)
 
+    def backward(self):
+        """
+        Backward Propagation of Sigmoid Layer
+        :return:
+        """
+        # Initialize the gradients to 0.
+        self.gradients = {n: np.zeros_like(n.value) for n in self.inbound_layers}
+
+        for n in self.outbound_layers:
+            grad_cost = n.gradients[self]
+            input_layer = self.inbound_layers[0]
+            # sigmoid'(x) = sigmoid(x)*(1 - sigmoid(x))
+            input_val = input_layer.value
+            self.gradients[input_layer] += grad_cost*self._sigmoid(input_val)*(1 - self._sigmoid(input_val))
+
+
 
