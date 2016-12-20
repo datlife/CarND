@@ -43,8 +43,8 @@ class Sigmoid(Layer):
             grad_cost = n.gradients[self]
             input_layer = self.inbound_layers[0]
             # sigmoid'(x) = sigmoid(x)*(1 - sigmoid(x))
-            input_val = input_layer.value
-            self.gradients[input_layer] += grad_cost*self._sigmoid(input_val)*(1 - self._sigmoid(input_val))
+            sigmoid = self.value
+            self.gradients[input_layer] += grad_cost*sigmoid*(1 - sigmoid)
 
 
 
