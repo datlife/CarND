@@ -18,17 +18,20 @@ def print_epoch_stats(epoch_i, sess, last_features, last_labels):
     pass
 
 
-
-def weights(n_features, n_labels):
+def weights(weight_name, n_features, n_labels):
     """
     Return TensorFlow weights
+    :param weight_name: name of weight
     :param n_features: Number of features
     :param n_labels: Number of labels
     :return: TensorFlow weights
     """
     # TODO: Return weights
-    w = tf.Variable(tf.truncated_normal((n_features, n_labels)))
-    return w
+    # w = tf.Variable(tf.truncated_normal((n_features, n_labels)))
+    # Xavier Initialization - Linear only
+    # Numpy version: w = np.random.randn(n_features, n_labels)/np.sqrt(n_features)
+    # TensorFlow Version:
+    return tf.get_variable(weight_name, [n_features, n_labels], initializer=tf.contrib.layers.xavier_initializer())
 
 
 def biases(n_labels):
@@ -39,6 +42,9 @@ def biases(n_labels):
     """
     # TODO: Return biases
     b = tf.Variable(tf.zeros(n_labels))
+    # b = tf.Variable(tf.truncated_normal((1, n_labels)))
+    # b = tf.get_variable("b", [n_labels], initializer=tf.contrib.layers.xavier_initializer())
+
     return b
 
 

@@ -10,7 +10,7 @@ learning_rate = 0.0025
 # Batch size
 batch_size = 1024
 
-cn_features = 784
+n_features = 784
 # Define number of possible output classes
 n_classes = 10
 
