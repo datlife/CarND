@@ -4,9 +4,9 @@ from Week3.helper import weights, biases, linear, batches
 from tensorflow.examples.tutorials.mnist import input_data
 
 # /////////HYPER-PARAMETERS
-epochs = 100
-learning_rate = 0.0012
-batch_size = 5048
+epochs = 10
+learning_rate = 0.005
+batch_size = 64
 # /////////////////////////
 
 # path to saved model
@@ -28,6 +28,8 @@ test_labels   = mnist.test.labels.astype(np.float32)
 # PRE-PROCESSING IMAGES HERE:
 # 1. Zero-mean : (each_color_channel - 128)/128
 
+# Mini-batches
+batches = batches(batch_size, train_features, train_labels)
 
 # ////////////////////////////// BUILD NEURAL NET ////////////////////////////////////////////
 # Reference: Why 'None' is in exercise 9
@@ -47,26 +49,23 @@ b = {'logit_layer': biases(n_hidden),
 
 # Logistic Classifier Layer
 logits = linear(features, w['logit_layer'], b['logit_layer'])
-
 # Rectified Linear Unit (ReLU) - Activation Function Layer
 reLU = tf.nn.relu(logits)
-
 # Output layer
 output = tf.add(tf.matmul(reLU, w['relu_layer']), b['relu_layer'])
 
+# ////////////////////////// OPTIMIZATION /////////////////////////////
+
+# Cross-Entropy to find distance - DO NOT USE RAW Formula. (numerically unstable)
+# Source: https://www.tensorflow.org/how_tos/summaries_and_tensorboard/
 # Soft-max
-soft_max = tf.nn.softmax(output)
-
-# Cross-Entropy to find distance
-cross_entropy = - tf.reduce_sum(labels * tf.log(soft_max))
-
+# soft_max = tf.nn.softmax(output)
+# cross_entropy = - tf.reduce_sum(labels * tf.log(soft_max))
+cross_entropy = tf.nn.softmax_cross_entropy_with_logits(output, labels)
 # Loss Values
 loss = tf.reduce_mean(cross_entropy)
 
-# Mini-batches
-batches = batches(batch_size, train_features, train_labels)
-
-# Exponential Decay Learning Rate
+# Exponential Decay Learning Rate  - For ADAM-OPTIMIZER
 epoch_step = tf.Variable(0)
 exp_lr = tf.train.exponential_decay(learning_rate, epoch_step, len(batches), 0.95)
 
@@ -80,7 +79,14 @@ correct_prediction = tf.equal(tf.argmax(output, 1), tf.argmax(labels, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 # Tada: Save your model here
-saver = tf.train.Saver()
+# saver = tf.train.Saver()
+
+# TensorBoard
+# scalar_summary: values over time
+# histogram_summary: value distribution from one particular layer.
+
+loss_summary = tf.scalar_summary('loss', loss,)
+
 
 with tf.Session() as session:
     # Initialize all possible variables in Tensor Flow
@@ -100,4 +106,4 @@ with tf.Session() as session:
         print('Epoch: {:<4} - LR: {:9.5} - Cost: {:<8.5} Valid Accuracy: {:<5.4}'.format(epoch, lr, l, test_accuracy))
 
     # Save the model
-    saver.save(session, save_file)
+    # saver.save(session, save_file)
