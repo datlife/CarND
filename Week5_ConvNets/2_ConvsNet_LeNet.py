@@ -34,7 +34,7 @@ BATCH_SIZE = 128
 LEARNING_RATE = 0.001
 
 
-def conv_layer(data, W, b, strides=1):
+def conv_layer(x, W, b, strides=1):
     """
     Convolution Layer Wrapper
     :param data: input data
@@ -43,7 +43,7 @@ def conv_layer(data, W, b, strides=1):
     :param strides:
     :return: a convolution layer
     """
-    x = tf.nn.conv2d(data, W, b, strides=[1, strides, strides, 1], padding='SAME')
+    x = tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='VALID')
     x = tf.nn.bias_add(x, b)
     return tf.nn.relu(x)
 
@@ -61,23 +61,46 @@ def LeNet(x):
     mu = 0
     sigma = 0.1
 
+    weights = {
+               'layer_1': tf.Variable(tf.truncated_normal([5, 5, 1, 6])),
+               'layer_2': tf.Variable(tf.truncated_normal([5, 5, 6, 16])),
+               'fc_1': tf.Variable(tf.truncated_normal([5*5*16, 120], mean=mu, stddev=sigma)),
+               'fc_2': tf.Variable(tf.truncated_normal([120, 84], mean=mu, stddev=sigma)),
+               'out': tf.Variable(tf.truncated_normal([84, 10], mean=mu, stddev=sigma))
+              }
+    biases = {
+               'layer_1': tf.Variable(tf.zeros(6)),
+               'layer_2': tf.Variable(tf.zeros(16)),
+               'fc_1': tf.Variable(tf.zeros(120)),
+               'fc_2': tf.Variable(tf.zeros(84)),
+               'out': tf.Variable(tf.zeros(10))
+    }
     # Layer 1: "Convolution" Layer:  Input 32x32x1 --> Output : 28x28x6 ---- 6 filter size = 5x5, stride = 1, pad = 0
     #            Activation        - ReLU
     #            Pooling           - MaxPooling --- 14x14x6
+    layer_1 = conv_layer(x, weights['layer_1'], biases['layer_1'])
+    layer_1 = max_pool2d(layer_1, k=2)
 
     # Layer 2: "Convolution" Layer:  Input 14x14x6 --> Output : 10x10x16 ---- 6 filter size = 5x5, stride = 1, pad = 0
     #            Activation       -  ReLU
     #            Pooling          -  MedianPooling -- 5x5x16
+    layer_2 = conv_layer(layer_1, weights['layer_2'], biases['layer_2'])
+    layer_2 = max_pool2d(layer_2, k=2)
 
     # Flatten Output : 5x5x16 --> 400
+    flatten_layer = tf.contrib.layers.flatten(layer_2)
 
     # Layer 3: "Fully Connected" Layer: (Hidden Layer) Input: 400:  Output: 1x120
     #            Activation       -  ReLU
+    fc1 = tf.add(tf.matmul(flatten_layer, weights['fc_1']), biases['fc_1'])
 
     # Layer 4: "Fully Connected" Layer: (Hidden Layer) Input: 120:  Output 84 outputs
+    fc2 = tf.add(tf.matmul(fc1, weights['fc_2']), biases['fc_2'])
 
     # Layer 5 : Final Layer:                           Input 84  :  Output 10 output
+    logits = tf.add(tf.matmul(fc2, weights['out']), biases['out'])
 
+    return logits
 
 # Features and Labels
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))
@@ -111,19 +134,19 @@ def evaluate(X_data, y_data):
 
 # Train Model
 with tf.Session() as sess:
-    sess.run(tf.global_variablbes_initializer())
+    sess.run(tf.initialize_all_variables())
     num_examples = len(X_train)
     print("Training...")
     print()
     for i in range(EPOCHS):
         X_train, Y_train = shuffle(X_train, Y_train)
+        print("EPOCH {} ...".format(i+1))
         for offset in range(0, num_examples, BATCH_SIZE):
             end = offset + BATCH_SIZE
             batch_x, batch_y = X_train[offset:end], Y_train[offset:end]
             sess.run(training_op, feed_dict={x: batch_x, y: batch_y})
 
         validation_accuracy = evaluate(X_validation, Y_validation)
-        print("EPOCH {} ...".format(i+1))
         print("Validation Accuracy = {:.3f}".format(validation_accuracy))
         print()
 
