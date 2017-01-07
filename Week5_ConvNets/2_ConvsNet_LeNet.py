@@ -33,10 +33,8 @@ X_train, y_train = shuffle(X_train, Y_train)
 # Build The CovNets
 EPOCHS = 10
 BATCH_SIZE = 128
-LEARNING_RATE = 0.009
+LEARNING_RATE = 0.001
 KEEP_PROP = 0.5
-L2_REGULARIZATION = 0.0001
-
 
 def conv_layer(x, W, b, strides=1):
     """
@@ -62,17 +60,18 @@ def weights(weight_name, size):
     return tf.get_variable(weight_name, size, initializer=tf.contrib.layers.xavier_initializer())
 
 
-def evaluate(x_data, y_data, loss, summary_op):
+def evaluate(x_data, y_data, loss_op):
     num_of_examples = len(x_data)
     total_accuracy = 0
     session = tf.get_default_session()
     validation_loss = 0.0
+
     for offset in range(0, num_of_examples, BATCH_SIZE):
         bch_x, bch_y = x_data[offset:offset + BATCH_SIZE], y_data[offset:offset + BATCH_SIZE]
-        accuracy, val_loss, log_entry = session.run([accuracy_operation, loss, summary_op], feed_dict={x: bch_x, y: bch_y})
+        accuracy, _loss= session.run([accuracy_operation, loss_op], feed_dict={x: bch_x, y: bch_y})
         total_accuracy += (accuracy*len(batch_x))
-        validation_loss += val_loss
-    return total_accuracy/num_of_examples, validation_loss, log_entry
+        validation_loss += _loss
+    return total_accuracy/num_of_examples, validation_loss
 
 
 def LeNet(x):
@@ -133,10 +132,8 @@ tf.reset_default_graph()
 
 # Features and Labels
 x = tf.placeholder(tf.float32, (None, 32, 32, 1), name="features_holder")
-y = tf.placeholder(tf.int32, None, name="label_holder")
+y = tf.placeholder(tf.int32, (None), name="label_holder")
 one_hot_y = tf.one_hot(y, 10)
-
-# Training Pipeline
 
 # Load Network Architecture
 logits = LeNet(x)
@@ -146,6 +143,7 @@ loss = tf.reduce_mean(cross_entropy)
 # Apply AdamOptimizer
 optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE)
 training_op = optimizer.minimize(loss)
+
 # Apply L2 Regularization to avoid over-fitting
 # Apply Batch Normalization
 
@@ -180,15 +178,16 @@ with tf.Session() as sess:
         for offset in range(0, num_examples, BATCH_SIZE):
             end = offset + BATCH_SIZE
             batch_x, batch_y = X_train[offset:end], Y_train[offset:end]
-            _, l = sess.run([training_op, loss], feed_dict={x: batch_x, y: batch_y})
+            sess.run(training_op, feed_dict={x: batch_x, y: batch_y})
 
-        validation_accuracy, val_loss, log_entry = evaluate(X_validation, Y_validation,loss, summary_op)
+        validation_accuracy, val_loss = evaluate(X_validation, Y_validation, loss)
         print("Validation Loss {:<6.5f}  | Validation Accuracy = {:.3f}".format(val_loss, validation_accuracy))
-        tf.scalar_summary('loss', val_loss)
-        tf.scalar_summary('accuracy', validation_accuracy)
-        # Merge all summaries and write them to ./tmp/mnist_logs (by_default)
-        summary_op = tf.merge_all_summaries()
-        recorder.add_summary(log_entry, i+1)
+
+        # tf.scalar_summary('loss', val_loss)
+        # tf.scalar_summary('accuracy', validation_accuracy)
+        # # Merge all summaries and write them to ./tmp/mnist_logs (by_default)
+        # summary_op = tf.merge_all_summaries()
+        # recorder.add_summary(summary_op, i+1)
 
     saver.save(sess, save_file)
     print("Train Model saved")
