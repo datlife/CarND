@@ -27,10 +27,6 @@ def weights(weight_name, n_features, n_labels):
     :return: TensorFlow weights
     """
     # TODO: Return weights
-    # w = tf.Variable(tf.truncated_normal((n_features, n_labels)))
-    # Xavier Initialization - Linear only
-    # Numpy version: w = np.random.randn(n_features, n_labels)/np.sqrt(n_features)
-    # TensorFlow Version:
     return tf.get_variable(weight_name, [n_features, n_labels], initializer=tf.contrib.layers.xavier_initializer())
 
 

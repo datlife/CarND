@@ -2,6 +2,7 @@
   <dictionary name="datinfo">
     <words>
       <w>logit</w>
+      <w>logits</w>
       <w>nano</w>
       <w>relu</w>
     </words>

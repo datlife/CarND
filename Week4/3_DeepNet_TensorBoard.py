@@ -80,7 +80,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 # TensorBoard - Debugging
 # scalar_summary: values over time
 # histogram_summary: value distribution from one particular layer.
-recorder = tf.train.SummaryWriter('./logs/',graph=tf.get_default_graph())
+recorder = tf.train.SummaryWriter('./logs/', graph=tf.get_default_graph())
 
 with tf.Session() as session:
     tf.scalar_summary('loss', loss)
