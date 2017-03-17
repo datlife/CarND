@@ -193,10 +193,11 @@ def get_line(slope, points, y_max, yaxis):
     else:
         return np.array([[0, 0, 0, 0]])
 
-math.pow
+
 def cal_dist(line):
     for x1,y1, x2, y2 in line:
         return (x1-x2)**2 + (y1-y2)**2
+
 
 def avg_slope(slopes):
     """
@@ -224,7 +225,7 @@ def hsv_convert(image):
 
     # Convert to HSV image
     hsv = cv2.cvtColor(equalized, cv2.COLOR_BGR2HSV)
-
+    return hsv
 
 def smooth_slope(new, prev, alpha):
     return alpha * new + (1 - alpha) * prev
