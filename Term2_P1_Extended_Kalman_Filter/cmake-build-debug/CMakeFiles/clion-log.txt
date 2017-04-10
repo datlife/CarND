@@ -1,0 +1,4 @@
+/home/datinfo/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug
