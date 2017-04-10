@@ -5,36 +5,31 @@ from tensorflow.contrib.layers import flatten
 
 from tensorflow.examples.tutorials.mnist import input_data
 
-mnist = input_data.read_data_sets("MNIST_data/", reshape=False)
-X_train, Y_train = mnist.train.images, mnist.train.labels
-X_validation, Y_validation = mnist.validation.images, mnist.validation.labels
-X_test, Y_test = mnist.test.images, mnist.test.labels
 
-
-save_file = 'LeNet_model.ckpt'
-
-# Display Image Specs:
-print("\nImage shape: {}\n".format(X_train[0].shape))
-print("Training set: {} samples.".format(len(X_train)))
-print("Validation set: {} samples.".format(len(X_validation)))
-print("Test set: {} samples.".format(len(X_test)))
-
-
+# ////////////////////////// IMPORT DATA SET ////////////////////////////////////////////
+mnist = input_data.read_data_sets("MNIST/", reshape=False)
+X_train, y_train = mnist.train.images, mnist.train.labels
+X_validation, y_validation = mnist.validation.images, mnist.validation.labels
+X_test, y_test = mnist.test.images, mnist.test.labels
 # Pad images with 0s
 X_train = np.pad(X_train, ((0, 0), (2, 2), (2, 2), (0, 0)), 'constant')
 X_validation = np.pad(X_validation, ((0, 0), (2, 2), (2, 2), (0, 0)), 'constant')
 X_test = np.pad(X_test, ((0, 0), (2, 2), (2, 2), (0, 0)), 'constant')
 
 print("Updated Image Shape: {}".format(X_train[0].shape))
-
 # Pre-process Data - Shuffle Data
-X_train, y_train = shuffle(X_train, Y_train)
+X_train, y_train = shuffle(X_train, y_train)
 
-# Build The CovNets
+# /////////////////////////HYPER PARAMETERS//////////////////////////////////////////////////////
 EPOCHS = 10
 BATCH_SIZE = 128
 LEARNING_RATE = 0.001
 KEEP_PROP = 0.5
+
+save_file = 'LeNet_model.ckpt'
+
+# ///////////////////// HELPER METHODS /////////////////////////////////////////////////////////
+
 
 def conv_layer(x, W, b, strides=1):
     """
@@ -60,18 +55,19 @@ def weights(weight_name, size):
     return tf.get_variable(weight_name, size, initializer=tf.contrib.layers.xavier_initializer())
 
 
-def evaluate(x_data, y_data, loss_op):
-    num_of_examples = len(x_data)
+def evaluate(X_data, y_data, loss_op):
+    num_of_examples = len(X_data)
     total_accuracy = 0
-    session = tf.get_default_session()
     validation_loss = 0.0
+    session = tf.get_default_session()
 
     for offset in range(0, num_of_examples, BATCH_SIZE):
-        bch_x, bch_y = x_data[offset:offset + BATCH_SIZE], y_data[offset:offset + BATCH_SIZE]
-        accuracy, _loss= session.run([accuracy_operation, loss_op], feed_dict={x: bch_x, y: bch_y})
-        total_accuracy += (accuracy*len(batch_x))
+        batch_x, batch_y = X_data[offset:offset + BATCH_SIZE], y_data[offset:offset + BATCH_SIZE]
+        accuracy, _loss = session.run([accuracy_operation, loss_op], feed_dict={x: batch_x, y: batch_y})
+
+        total_accuracy += (accuracy * len(batch_x))
         validation_loss += _loss
-    return total_accuracy/num_of_examples, validation_loss
+    return total_accuracy / num_of_examples, validation_loss
 
 
 def LeNet(x):
@@ -123,9 +119,8 @@ def LeNet(x):
     return logits
 
 
-#
-# ######## TRAINING PIPELINE #############
-#
+# /////////////////////////////////// TRAINING PIPELINE ///////////////////////////////////////////
+
 
 # Remove the previous weights and bias
 tf.reset_default_graph()
@@ -142,7 +137,7 @@ cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits, one_hot_y)
 loss = tf.reduce_mean(cross_entropy)
 # Apply AdamOptimizer
 optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE)
-training_op = optimizer.minimize(loss)
+training_operation = optimizer.minimize(loss)
 
 # Apply L2 Regularization to avoid over-fitting
 # Apply Batch Normalization
@@ -150,6 +145,8 @@ training_op = optimizer.minimize(loss)
 # Model Evaluation
 correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(one_hot_y, 1))
 accuracy_operation = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+
 saver = tf.train.Saver()
 
 
@@ -169,25 +166,20 @@ with tf.Session() as sess:
     except Exception as e:
         print(e)
         print("No model found...Start building a new one")
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
 
     num_examples = len(X_train)
     for i in range(EPOCHS):
-        X_train, Y_train = shuffle(X_train, Y_train)
+        X_train, y_train = shuffle(X_train, y_train)
         print("EPOCH {} ".format(i+1))
         for offset in range(0, num_examples, BATCH_SIZE):
             end = offset + BATCH_SIZE
-            batch_x, batch_y = X_train[offset:end], Y_train[offset:end]
-            sess.run(training_op, feed_dict={x: batch_x, y: batch_y})
+            batch_x, batch_y = X_train[offset:end], y_train[offset:end]
+            sess.run(training_operation, feed_dict={x: batch_x, y: batch_y})
 
-        validation_accuracy, val_loss = evaluate(X_validation, Y_validation, loss)
-        print("Validation Loss {:<6.5f}  | Validation Accuracy = {:.3f}".format(val_loss, validation_accuracy))
-
-        # tf.scalar_summary('loss', val_loss)
-        # tf.scalar_summary('accuracy', validation_accuracy)
-        # # Merge all summaries and write them to ./tmp/mnist_logs (by_default)
-        # summary_op = tf.merge_all_summaries()
-        # recorder.add_summary(summary_op, i+1)
+        validation_accuracy, val_loss = evaluate(X_validation, y_validation, loss)
+        print("Validation loss: {:<6.5f} Validation Accuracy = {:.3f}".format(val_loss, validation_accuracy))
+        print()
 
     saver.save(sess, save_file)
     print("Train Model saved")
