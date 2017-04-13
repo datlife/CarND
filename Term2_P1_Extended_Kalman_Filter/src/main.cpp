@@ -13,7 +13,9 @@ using std::vector;
 
 #define INPUT_FILE "../obj_pose-laser-radar-synthetic-input.txt"
 
-
+MatrixXd CalculateJacobian(const VectorXd& x_state);
+VectorXd CalculateRMSE(const vector<VectorXd> &estimations,
+                       const vector<VectorXd> &ground_truth);
 int main() {
 
     /*******************************************************************************
@@ -33,7 +35,7 @@ int main() {
     string line;
     // set i to get only first 3 measurements
     int i = 0;
-    while(getline(in_file, line) && (i<=10)){
+    while(getline(in_file, line) && (i<=3)){
         MeasurementPackage meas_package;
         istringstream iss(line);
         string sensor_type;
@@ -72,4 +74,67 @@ int main() {
         in_file.close();
     }
     return 0;
+}
+
+MatrixXd CalculateJacobian(const VectorXd& x_state){
+    MatrixXd Hj(3,4);
+    //recover state parameters
+    float px = x_state(0);
+    float py = x_state(1);
+    float vx = x_state(2);
+    float vy = x_state(3);
+
+    //TODO: YOUR CODE HERE
+    //check division by zero
+    float distance = sqrt(px*px + py*py);
+
+    //compute the Jacobian matrix
+    if (distance != 0){
+        // Watch : Linearization non-linear models to understand Taylor series first
+        // Range Rho
+        float d_rho_posx = px / distance;
+        float d_rho_posy = py / distance;
+
+        // Angle thea
+        float d_theta_posx = - py / (distance*distance);
+        float d_theta_posy =   px / (distance*distance);
+        // Range Rate:
+        float d_rho_rate_posx = py*(vx*py - vy*px)/(distance*distance*distance);
+        float d_rho_rate_posy = px*(vy*px - vx*py)/(distance*distance*distance);
+        float d_rho_rate_velx = d_rho_posx;
+        float d_rho_rate_vely = d_rho_posy;
+
+        // Compute Jacobian matrix
+        Hj << d_rho_posx,      d_rho_posy,      0,     0,
+              d_theta_posx,    d_theta_posy,    0,     0,
+              d_rho_rate_posx, d_rho_rate_posy, d_rho_rate_velx, d_rho_rate_vely;
+    }
+    return Hj;
+}
+VectorXd CalculateRMSE(const vector<VectorXd> &estimations,
+                       const vector<VectorXd> &ground_truth){
+    VectorXd rmse(4);
+    rmse << 0,0,0,0;
+
+    // TODO: YOUR CODE HERE
+
+    // check the validity of the following inputs:
+    //  * the estimation vector size should not be zero
+    //  * the estimation vector size should equal ground truth vector size
+    // ... your code here
+
+    //accumulate squared residuals
+    for(int i=0; i < estimations.size(); ++i){
+        // ... your code here
+
+    }
+
+    //calculate the mean
+    // ... your code here
+
+    //calculate the squared root
+    // ... your code here
+
+    //return the result
+    return rmse;
 }
