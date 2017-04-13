@@ -52,7 +52,7 @@ Tracking::~Tracking() {
 // Process a single measurement
 void Tracking::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     if (!is_initialized_) {
-        //cout << "Kalman Filter Initialization " << endl;
+        cout << "Kalman Filter Initialization " << endl;
 
         //set the state with the initial location and zero velocity
         //State matrix
@@ -60,6 +60,10 @@ void Tracking::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
                   0, 0;                                                                         //Velocity = 0
         previous_timestamp_ = measurement_pack.timestamp_;
         is_initialized_ = true;
+        std::cout << "Initializing x_= \n" << kf_.x_ << std::endl;
+        std::cout << "Initializing P_= \n" << kf_.P_ << std::endl;
+        std::cout << "K_= \n" << kf_.K_ << std::endl;
+
         return;
     }
 
@@ -90,7 +94,7 @@ void Tracking::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // with the most recent raw measurements_
 
     std::cout << "x_= \n" << kf_.x_ << std::endl;
-    std::cout <<" F = \n" << kf_.F_ << std::endl;
     std::cout << "P_= \n" << kf_.P_ << std::endl;
+    std::cout << "K_= \n" << kf_.K_ << std::endl;
 
 }

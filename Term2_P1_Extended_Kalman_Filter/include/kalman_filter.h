@@ -7,6 +7,8 @@ using Eigen::VectorXd;
 
 class KalmanFilter {
 public:
+	///* Kalman Gain
+	MatrixXd K_;
 
 	///* state vector
 	VectorXd x_;
@@ -25,7 +27,6 @@ public:
 
 	///* measurement covariance matrix
 	MatrixXd R_;
-
 	/**
 	 * Constructor
 	 */

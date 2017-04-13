@@ -33,7 +33,7 @@ int main() {
     string line;
     // set i to get only first 3 measurements
     int i = 0;
-    while(getline(in_file, line) && (i<=3)){
+    while(getline(in_file, line) && (i<=10)){
         MeasurementPackage meas_package;
         istringstream iss(line);
         string sensor_type;
