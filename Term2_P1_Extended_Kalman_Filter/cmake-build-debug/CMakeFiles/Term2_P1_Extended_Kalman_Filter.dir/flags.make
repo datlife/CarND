@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include -I/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen 
+CXX_INCLUDES = -I/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include -I/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen 
 

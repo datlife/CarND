@@ -8,108 +8,110 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
+				<Option working_dir="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
+				<Option working_dir="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
+				<Option working_dir="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Term2_P1_Extended_Kalman_Filter">
-				<Option output="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Term2_P1_Extended_Kalman_Filter" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
+				<Option output="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Term2_P1_Extended_Kalman_Filter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include"/>
-					<Add directory="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen"/>
-					<Add directory="/usr/include/c++/4.8"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
-					<Add directory="/usr/include/c++/4.8/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include"/>
+					<Add directory="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen"/>
+					<Add directory="/opt/ros/indigo/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 Term2_P1_Extended_Kalman_Filter"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 Term2_P1_Extended_Kalman_Filter"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Term2_P1_Extended_Kalman_Filter/fast">
-				<Option output="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Term2_P1_Extended_Kalman_Filter" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
+				<Option output="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Term2_P1_Extended_Kalman_Filter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include"/>
-					<Add directory="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen"/>
-					<Add directory="/usr/include/c++/4.8"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
-					<Add directory="/usr/include/c++/4.8/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include"/>
+					<Add directory="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/../Eigen"/>
+					<Add directory="/opt/ros/indigo/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 Term2_P1_Extended_Kalman_Filter/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 Term2_P1_Extended_Kalman_Filter/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include/kalman_filter.h">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include/kalman_filter.h">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include/measurement_package.h">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include/measurement_package.h">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/include/tracking.h">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/include/tracking.h">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/src/kalman_filter.cpp">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/src/kalman_filter.cpp">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/src/main.cpp">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/src/main.cpp">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/src/measurement_package.cpp">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/src/measurement_package.cpp">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/src/tracking.cpp">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/src/tracking.cpp">
 			<Option target="Term2_P1_Extended_Kalman_Filter"/>
 		</Unit>
-		<Unit filename="/home/datinfo/Documents/CarND/Term2_P1_Extended_Kalman_Filter/CMakeLists.txt">
+		<Unit filename="/home/dat/Documents/udacity/CarND/Term2_P1_Extended_Kalman_Filter/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
