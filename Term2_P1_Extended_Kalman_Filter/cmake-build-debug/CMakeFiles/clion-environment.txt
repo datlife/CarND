@@ -1,2 +1,1 @@
-Options: 
-CMake: 3.7.1@/home/datinfo/clion-2017.1/bin/cmake/bin/cmake
+CMake: 3.6.3@/home/dat/.local/share/umake/ide/clion/bin/cmake/bin/cmake
