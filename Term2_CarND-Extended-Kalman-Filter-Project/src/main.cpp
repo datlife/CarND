@@ -29,7 +29,7 @@ void write_output      (ofstream &, const FusionEKF &, const MeasurementPackage 
 // |-----------------------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
-    // Validate arguments
+    // Validate arguments - For this project, it requires an input path and output path respectively.
     validate_arguments(argc, argv);
 
     // Create input/output stream
@@ -40,13 +40,15 @@ int main(int argc, char* argv[]) {
     // Validate input/output file
     check_files(in_file_, in_file_name_, out_file_, out_file_name_);
 
+    // Used to store data from input file
     vector<MeasurementPackage> measurement_pack_list;
     vector<GroundTruthPackage> gt_pack_list;
 
     // Read input file (Laser/Radar Measurement) - passed by reference
     read_input(in_file_, measurement_pack_list, gt_pack_list);
 
-    // Fuse Sensors and write to output -- in same loop
+    // Fuse Laser and Radar data to estimate position and
+    // write to output -- in same loop
     fuse_data_sensors(out_file_, measurement_pack_list, gt_pack_list);
 
     // close files
@@ -77,64 +79,66 @@ void validate_arguments(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 }
+
+void check_files(ifstream& in_file, string& in_name, ofstream& out_file, string& out_name) {
+    if (!in_file.is_open()) {
+        cerr << "Cannot open input file: " << in_name << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    if (!out_file.is_open()) {
+        cerr << "Cannot open output file: " << out_name << endl;
+        exit(EXIT_FAILURE);
+    }
+}
 void read_input(ifstream &in_file_, vector<MeasurementPackage> &measurement_pack_list, vector<GroundTruthPackage> &gt_pack_list){
 
     string line;
     // prep the measurement packages (each line represents a measurement at a timestamp)
     while (getline(in_file_, line)) {
+        long long timestamp;
         string sensor_type;
+        istringstream iss(line);
         MeasurementPackage meas_package;
         GroundTruthPackage gt_package;
-        istringstream iss(line);
-        long long timestamp;
-        // reads first element from the current line
+
+        // Reads first element from the current line
         iss >> sensor_type;
         if (sensor_type.compare("L") == 0) {
             // LASER MEASUREMENT
+            float x, y;
+            iss >> x >> y;
+            iss >> timestamp;
 
             // read measurements at this timestamp
             meas_package.sensor_type_ = MeasurementPackage::LASER;
             meas_package.raw_measurements_ = VectorXd(2);
-            float x;
-            float y;
-            iss >> x;
-            iss >> y;
             meas_package.raw_measurements_ << x, y;
-            iss >> timestamp;
             meas_package.timestamp_ = timestamp;
             measurement_pack_list.push_back(meas_package);
         }
         else if (sensor_type.compare("R") == 0) {
             // RADAR MEASUREMENT
+            float ro, phi, ro_dot;
+            iss >> ro >> phi >> ro_dot;
+            iss >> timestamp;
 
             // read measurements at this timestamp
             meas_package.sensor_type_ = MeasurementPackage::RADAR;
             meas_package.raw_measurements_ = VectorXd(3);
-            float ro;
-            float phi;
-            float ro_dot;
-            iss >> ro;
-            iss >> phi;
-            iss >> ro_dot;
             meas_package.raw_measurements_ << ro, phi, ro_dot;
-            iss >> timestamp;
             meas_package.timestamp_ = timestamp;
             measurement_pack_list.push_back(meas_package);
         }
-        // read ground truth data to compare later
-        float x_gt;
-        float y_gt;
-        float vx_gt;
-        float vy_gt;
-        iss >> x_gt;
-        iss >> y_gt;
-        iss >> vx_gt;
-        iss >> vy_gt;
+        // Read ground truth data to compare later
+        float x_gt, y_gt, vx_gt, vy_gt;
         gt_package.gt_values_ = VectorXd(4);
+
+        iss >> x_gt >> y_gt;    // ground truth of current Position
+        iss >> vx_gt >>vy_gt;   // ground truth of current Velocity
         gt_package.gt_values_ << x_gt, y_gt, vx_gt, vy_gt;
         gt_pack_list.push_back(gt_package);
     }
-
 }
 
 void fuse_data_sensors( ofstream &out_file_, vector<MeasurementPackage> &measurement_pack_list, vector<GroundTruthPackage> &gt_pack_list){
@@ -145,12 +149,11 @@ void fuse_data_sensors( ofstream &out_file_, vector<MeasurementPackage> &measure
     // Used to compute the RMSE later
     vector<VectorXd> estimations;
     vector<VectorXd> ground_truth;
-    Tools tools;     // compute the accuracy (RMSE)
 
     size_t N = measurement_pack_list.size();
     for (size_t k = 0; k < N; ++k) {
-        //Call the EKF-based fusion
-        // start filtering from the second frame (the speed is unknown in the first frame)
+        // Call the EKF-based fusion
+        // Start filtering from the second frame (the speed is unknown in the first frame)
         fusionEKF.ProcessMeasurement(measurement_pack_list[k]);
 
         // Update output file
@@ -161,7 +164,7 @@ void fuse_data_sensors( ofstream &out_file_, vector<MeasurementPackage> &measure
         ground_truth.push_back(gt_pack_list[k].gt_values_);
     }
 
-    cout << "Accuracy - RMSE:" << endl << tools.CalculateRMSE(estimations, ground_truth) << endl;
+    cout << "Accuracy - RMSE:" << endl << fusionEKF.getTool().CalculateRMSE(estimations, ground_truth) << endl;
 
 }
 

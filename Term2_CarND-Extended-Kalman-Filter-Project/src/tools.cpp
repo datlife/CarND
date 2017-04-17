@@ -54,6 +54,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
     //recover state parameters
     float px = x_state(0);
     float py = x_state(1);
+
     //TODO: YOUR CODE HERE
     //check division by zero
     float distance = sqrt(px*px + py*py);

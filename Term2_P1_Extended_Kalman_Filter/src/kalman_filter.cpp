@@ -20,6 +20,7 @@ void KalmanFilter::Update(const VectorXd &z) {
     // Calculate Kalman gain K = P*H / (H*P*Ht + R)
     MatrixXd S = H_ * P_ * H_.transpose() + R_;
     K_ = (P_ * H_.transpose()) * S.inverse();
+
     //new estimate
     x_ = x_ + K_ * (z - z_pred);
     long x_size = x_.size();

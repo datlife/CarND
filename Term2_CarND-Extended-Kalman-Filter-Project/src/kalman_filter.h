@@ -11,7 +11,7 @@ class KalmanFilter {
     // state covariance matrix
     Eigen::MatrixXd P_;
 
-    // state transistion matrix
+    // state transition matrix
     Eigen::MatrixXd F_;
 
     // process covariance matrix
