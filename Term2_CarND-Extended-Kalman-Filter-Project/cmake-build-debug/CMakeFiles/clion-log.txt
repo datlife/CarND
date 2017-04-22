@@ -1,6 +1,6 @@
-/home/datinfo/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/datinfo/Documents/CarND/Term2_CarND-Extended-Kalman-Filter-Project
--- The C compiler identification is GNU 4.8.4
--- The CXX compiler identification is GNU 4.8.4
+/home/dat/Downloads/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/dat/Documents/udacity/CarND/Term2_CarND-Extended-Kalman-Filter-Project
+-- The C compiler identification is GNU 4.9.4
+-- The CXX compiler identification is GNU 4.9.4
 -- Check for working C compiler: /usr/bin/cc
 -- Check for working C compiler: /usr/bin/cc -- works
 -- Detecting C compiler ABI info
@@ -15,4 +15,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/datinfo/Documents/CarND/Term2_CarND-Extended-Kalman-Filter-Project/cmake-build-debug
+-- Build files have been written to: /home/dat/Documents/udacity/CarND/Term2_CarND-Extended-Kalman-Filter-Project/cmake-build-debug

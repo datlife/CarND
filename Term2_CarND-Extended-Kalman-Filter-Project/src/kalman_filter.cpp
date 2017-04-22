@@ -34,11 +34,6 @@ void KalmanFilter::Update(const VectorXd &z) {
   TODO:
     * update the state by using Kalman Filter equations
   */
-    H_ << 1, 0, 0, 0,
-          0, 1, 0, 0;
-    // Kalman Gain
-    VectorXd K_;
-
     // Calculate new measurement
     VectorXd z_pred = H_ * x_;
     VectorXd y = z - z_pred;
@@ -52,9 +47,15 @@ void KalmanFilter::Update(const VectorXd &z) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K_ * H_) * P_;
+
+    // Reset P
+    P_(0, 1) = P_(0, 3) = 0;
+    P_(1, 0) = P_(1, 2) = 0;
+    P_(2, 1) = P_(2, 3) = 0;
+    P_(3, 0) = P_(3, 2) = 0;
 }
 
-void KalmanFilter::UpdateEKF(const VectorXd &z, const Eigen::MatrixXd & Hj) {
+void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
   TODO:
     * update the state by using Extended Kalman Filter equations
@@ -67,33 +68,35 @@ void KalmanFilter::UpdateEKF(const VectorXd &z, const Eigen::MatrixXd & Hj) {
     double vx = x_[2];
     double vy = x_[3];
 
-    double theta = py/py;
-    if (theta > M_PI){
-        do{
-            theta = theta - 2*M_PI;
-        }while(theta > M_PI);
-    }
-    else if (theta < -M_PI){
-        do{
-            theta = theta + 2*M_PI;
-        }while(theta < -M_PI);
-    }
+    double theta = atan2(py ,px);
 
     VectorXd H = VectorXd(3);
     H << sqrt(px*px + py*py),
-         atan(theta),
+         theta,
          (px*vx + py*vy)/sqrt(px*px + py*py);
 
     VectorXd y = z - H;
-    // Kalman Gain
-    VectorXd K_;
-    // Calculate Kalman gain K = P*H / (H*P*Ht + R)
-    MatrixXd S = Hj * P_ * Hj.transpose() + R_;
-    K_ = (P_ * Hj.transpose()) * S.inverse();
+    while (y[1] < -M_PI)
+        y[1] += 2 * M_PI;
+    while (y[1] > M_PI)
+        y[1] -= 2 * M_PI;
+
+    // Calculate Kalman gain
+    MatrixXd S = H_ * P_ * H_.transpose() + R_; // H_ in this case is Jacbobian Hj
+    K_ = (P_ * H_.transpose()) * S.inverse();
 
     //new estimate
     x_ = x_ + K_ * y;
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
-    P_ = (I - K_ * Hj) * P_;
+    P_ = (I - K_ * H_) * P_;
+
+    // Since Radar could not determine velocity, I would not update velocity.
+    x_[2] = vx;
+    x_[3] = vy;
+    // Reset P
+    P_(0, 1) = P_(0, 3) = 0;
+    P_(1, 0) = P_(1, 2) = 0;
+    P_(2, 1) = P_(2, 3) = 0;
+    P_(3, 0) = P_(3, 2) = 0;
 }

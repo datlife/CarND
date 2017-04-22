@@ -44,11 +44,10 @@ int main(int argc, char* argv[]) {
     vector<MeasurementPackage> measurement_pack_list;
     vector<GroundTruthPackage> gt_pack_list;
 
-    // Read input file (Laser/Radar Measurement) - passed by reference
+    // Input is (Laser/Radar Measurement)
     read_input(in_file_, measurement_pack_list, gt_pack_list);
 
-    // Fuse Laser and Radar data to estimate position and
-    // write to output -- in same loop
+    // Fuse Laser and Radar data
     fuse_data_sensors(out_file_, measurement_pack_list, gt_pack_list);
 
     // close files
@@ -162,6 +161,8 @@ void fuse_data_sensors( ofstream &out_file_, vector<MeasurementPackage> &measure
         // Update estimations and ground truth to compute RMSE
         estimations.push_back(fusionEKF.ekf_.x_);
         ground_truth.push_back(gt_pack_list[k].gt_values_);
+        if(k >0 )
+            cout<<"Ground Truth = \n" << gt_pack_list[k].gt_values_ << "\n\n" << endl;
     }
 
     cout << "Accuracy - RMSE:" << endl << fusionEKF.getTool().CalculateRMSE(estimations, ground_truth) << endl;

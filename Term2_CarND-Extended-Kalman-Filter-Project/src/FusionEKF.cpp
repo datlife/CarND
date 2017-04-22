@@ -24,7 +24,7 @@ FusionEKF::FusionEKF() {
 
     //measurement covariance matrix R - laser
     R_laser_ << 0.0225, 0,
-              0,      0.0225;
+                0,      0.0225;
 
     //measurement covariance matrix R - radar
     R_radar_ << 0.09, 0,      0,
@@ -38,6 +38,9 @@ FusionEKF::FusionEKF() {
                 0, 0, 1, 0,
                 0, 0, 0, 1;
 
+    H_laser_ << 1, 0, 0 ,0,
+                0, 1, 0 ,0;
+
     /**
     TODO:
     * Finish initializing the FusionEKF.
@@ -48,7 +51,6 @@ FusionEKF::FusionEKF() {
 
     // Process covariance matrix Q
     ekf_.Q_ = MatrixXd(4, 4);
-    // Measurement Noise Covariance Matrix Z_
 }
 
 /**
@@ -81,7 +83,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
           Convert radar from polar to cartesian coordinates and initialize state.
           */
             // Convert Polar Coordinate (rho, theta, rho_dot) into Cartesian Coordinates
-            // How ?
             double rho = measurement_pack.raw_measurements_(0);
             double theta = measurement_pack.raw_measurements_(1);
             double x_pos = rho*sin(theta);
@@ -104,8 +105,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
                    0, 1, 0, 0,
                    0, 0, 1000, 0,
                    0, 0, 0, 1000;
-
-        // Anything else needed to be initialized?
 
         // done initializing, no need to predict or update
         is_initialized_ = true;
@@ -153,18 +152,21 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
-        Hj_ = tools_.CalculateJacobian(ekf_.x_);
-        ekf_.UpdateEKF(measurement_pack.raw_measurements_, Hj_);
+        Hj_ = tools_.CalculateJacobian(ekf_.x_); //?
+        if (!Hj_.isZero()) {
+            ekf_.Init(ekf_.x_, ekf_.P_, ekf_.F_, Hj_, R_radar_, ekf_.Q_);
+            ekf_.UpdateEKF(measurement_pack.raw_measurements_);
+            cout << "x_ = RADAR\n" << ekf_.x_ << endl;
+        }
 
     }
     else {
     // Laser updates
-        ekf_.H_ << 1, 0, 0, 0,
-                   0, 1, 0, 0;
+        ekf_.Init(ekf_.x_, ekf_.P_, ekf_.F_, H_laser_, R_laser_, ekf_.Q_);
         ekf_.Update(measurement_pack.raw_measurements_);
+        cout << "x_ = LASER\n" << ekf_.x_ << endl;
     }
+    cout << "P_ = \n" << ekf_.P_ << endl;
 
-    // print the output
-    cout << "x_ = " << ekf_.x_ << endl;
-    cout << "P_ = " << ekf_.P_ << endl;
+
 }

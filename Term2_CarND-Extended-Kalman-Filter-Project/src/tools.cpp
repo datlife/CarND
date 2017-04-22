@@ -58,8 +58,10 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
     //TODO: YOUR CODE HERE
     //check division by zero
     float distance = sqrt(px*px + py*py);
-    if (distance < 0.00001){
+    if (distance < 0.000001){
         std::cout << "CalculateJacobian() error - division is zero  at...." << std::endl;
+        // Set to zero for checking isZero condition
+        Hj.setZero();
         return Hj;
     }
     //compute the Jacobian matrix
