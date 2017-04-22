@@ -24,7 +24,27 @@ void KalmanFilter::Predict() {
   */
     // State Transition Matrix: F_
     // Current State : x_
+
+    float dt = F_(0, 2);
+    VectorXd x_prev = x_;
+
+    // Making prediction.
     x_ = F_ * x_;
+    // Calculate Acceleration to build better Kinematic Model
+//    if (dt > 0.00001) {
+//        double delta_vx = x_(2) - x_prev(2);
+//        double delta_vy = x_(3) - x_prev(3);
+//
+//        double x_acc = delta_vx / dt;
+//        double y_acc = delta_vy / dt;
+//
+//        VectorXd control_matrix(4);
+//        control_matrix << x_acc * (dt * dt),
+//                y_acc * (dt * dt),
+//                x_acc * dt,
+//                y_acc * dt;
+//        x_ = x_ + control_matrix;
+//    }
     MatrixXd Ft = F_.transpose();
     P_ = F_ * P_ * Ft + Q_;
 }
@@ -47,12 +67,6 @@ void KalmanFilter::Update(const VectorXd &z) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K_ * H_) * P_;
-
-    // Reset P
-    P_(0, 1) = P_(0, 3) = 0;
-    P_(1, 0) = P_(1, 2) = 0;
-    P_(2, 1) = P_(2, 3) = 0;
-    P_(3, 0) = P_(3, 2) = 0;
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
@@ -62,20 +76,27 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   */
 
     // Calculate new measurement
-    // Note that this is x' , which is predicted values
+    // Note that this is x' , which is predicted values in Predict Step
     double px = x_[0];
     double py = x_[1];
     double vx = x_[2];
     double vy = x_[3];
 
+    double rho = sqrt(px*px + py*py);
     double theta = atan2(py ,px);
+    double rho_dot = 0;
+    if (fabs(rho) > 0.0001)
+        rho_dot = (x_(0)*x_(2) + x_(1)*x_(3))/rho;
+
 
     VectorXd H = VectorXd(3);
-    H << sqrt(px*px + py*py),
+    H << rho,
          theta,
-         (px*vx + py*vy)/sqrt(px*px + py*py);
+         rho_dot;
+
 
     VectorXd y = z - H;
+    // Normalize angle into range [-pi, pi]
     while (y[1] < -M_PI)
         y[1] += 2 * M_PI;
     while (y[1] > M_PI)
@@ -91,12 +112,4 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K_ * H_) * P_;
 
-    // Since Radar could not determine velocity, I would not update velocity.
-    x_[2] = vx;
-    x_[3] = vy;
-    // Reset P
-    P_(0, 1) = P_(0, 3) = 0;
-    P_(1, 0) = P_(1, 2) = 0;
-    P_(2, 1) = P_(2, 3) = 0;
-    P_(3, 0) = P_(3, 2) = 0;
 }
