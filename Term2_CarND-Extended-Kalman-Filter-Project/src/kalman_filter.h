@@ -8,6 +8,9 @@ class KalmanFilter {
     // state vector
     Eigen::VectorXd x_;
 
+    // Previous state
+    Eigen::VectorXd x_prev_;
+
     // state covariance matrix
     Eigen::MatrixXd P_;
 
@@ -66,6 +69,12 @@ class KalmanFilter {
      */
     void UpdateEKF(const Eigen::VectorXd &z);
 
+    /**
+     * Updates Acceleration B ( State x = F_*x + B*u)
+     * where: B is a matrix (4,2)
+     * u is instant acceleration is calculated by : acc = (v_curr - x_prev)/delta_t;
+     */
+    void AddAcceleration();
 };
 
 #endif /* KALMAN_FILTER_H_ */

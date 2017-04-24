@@ -85,9 +85,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             // Convert Polar Coordinate (rho, theta, rho_dot) into Cartesian Coordinates
             double rho = measurement_pack.raw_measurements_(0);
             double theta = measurement_pack.raw_measurements_(1);
-            double x_pos = rho*sin(theta);
-            double y_pos = rho*cos(theta)*(-1);
-            init_state << x_pos, y_pos, 0 , 0;
+
+            init_state << rho*sin(theta), rho*cos(theta)*(-1), 0 , 0;
         }
         else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
           /**
@@ -103,8 +102,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         ekf_.P_ = MatrixXd(4, 4);
         ekf_.P_<<  1, 0, 0, 0,
                    0, 1, 0, 0,
-                   0, 0, 1000, 0,
-                   0, 0, 0, 1000;
+                   0, 0, 1, 0,
+                   0, 0, 0, 1;
 
         // done initializing, no need to predict or update
         is_initialized_ = true;
@@ -121,11 +120,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     float dt = (float)((measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0);	//dt - expressed in seconds
     previous_timestamp_ = measurement_pack.timestamp_;
 
-    // This would improve RMSE
-    ekf_.P_(0, 1) =  ekf_.P_(0, 3) = 0;
-    ekf_.P_(1, 0) =  ekf_.P_(1, 2) = 0;
-    ekf_.P_(2, 1) =  ekf_.P_(2, 3) = 0;
-    ekf_.P_(3, 0) =  ekf_.P_(3, 2) = 0;
     // Modify the F matrix so that the time is integrated
     ekf_.F_(0, 2) = dt;
     ekf_.F_(1, 3) = dt;
@@ -163,7 +157,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             ekf_.UpdateEKF(measurement_pack.raw_measurements_);
             cout << "x_ = RADAR\n" << ekf_.x_ << endl;
         }
-
     }
     else {
     // Laser updates
@@ -171,6 +164,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         ekf_.Update(measurement_pack.raw_measurements_);
         cout << "x_ = LASER\n" << ekf_.x_ << endl;
     }
+
 
 
     cout << "P_ = \n" << ekf_.P_ << endl;

@@ -28,6 +28,13 @@ void write_output      (ofstream &, const FusionEKF &, const MeasurementPackage 
 // |   RADAR   | DIST RHO | ANGLE THETA | DIST_RATE RHO DOT |  X POS | Y POS | X VEL | Y VEL | <-- Polar Coordinate
 // |-----------------------------------------------------------------------------------------
 
+// Result with obj_pose-laser-radar-synthetic-input.txt
+//Accuracy - RMSE:
+//0.097433
+//0.0852742
+//0.418077
+//0.478629
+
 int main(int argc, char* argv[]) {
     // Validate arguments - For this project, it requires an input path and output path respectively.
     validate_arguments(argc, argv);
@@ -84,7 +91,6 @@ void check_files(ifstream& in_file, string& in_name, ofstream& out_file, string&
         cerr << "Cannot open input file: " << in_name << endl;
         exit(EXIT_FAILURE);
     }
-
     if (!out_file.is_open()) {
         cerr << "Cannot open output file: " << out_name << endl;
         exit(EXIT_FAILURE);

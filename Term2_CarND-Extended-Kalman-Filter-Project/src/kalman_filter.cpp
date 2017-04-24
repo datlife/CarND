@@ -1,5 +1,5 @@
 #include "kalman_filter.h"
-
+#include <iostream>
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -23,28 +23,9 @@ void KalmanFilter::Predict() {
     * predict the state
   */
     // State Transition Matrix: F_
-    // Current State : x_
-
-    float dt = F_(0, 2);
-    VectorXd x_prev = x_;
-
+    x_prev_ = x_;
     // Making prediction.
     x_ = F_ * x_;
-    // Calculate Acceleration to build better Kinematic Model
-//    if (dt > 0.00001) {
-//        double delta_vx = x_(2) - x_prev(2);
-//        double delta_vy = x_(3) - x_prev(3);
-//
-//        double x_acc = delta_vx / dt;
-//        double y_acc = delta_vy / dt;
-//
-//        VectorXd control_matrix(4);
-//        control_matrix << x_acc * (dt * dt),
-//                y_acc * (dt * dt),
-//                x_acc * dt,
-//                y_acc * dt;
-//        x_ = x_ + control_matrix;
-//    }
     MatrixXd Ft = F_.transpose();
     P_ = F_ * P_ * Ft + Q_;
 }
@@ -67,6 +48,8 @@ void KalmanFilter::Update(const VectorXd &z) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K_ * H_) * P_;
+    //AddAcceleration(); // should have been calculated in Q
+
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
@@ -85,15 +68,15 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     double rho = sqrt(px*px + py*py);
     double theta = atan2(py ,px);
     double rho_dot = 0;
-    if (fabs(rho) > 0.0001)
-        rho_dot = (x_(0)*x_(2) + x_(1)*x_(3))/rho;
+
+    if (fabs(rho) > 0.0001) // avoid division by zero
+        rho_dot = (px*vx + py*vy)/rho;
 
 
     VectorXd H = VectorXd(3);
     H << rho,
          theta,
          rho_dot;
-
 
     VectorXd y = z - H;
     // Normalize angle into range [-pi, pi]
@@ -108,8 +91,35 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
     //new estimate
     x_ = x_ + K_ * y;
+
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K_ * H_) * P_;
 
+
 }
+
+void KalmanFilter::AddAcceleration(){
+
+    float dt = F_(0, 2);
+    if (dt > 0.00001) {
+        // Calculate acceleration in (x,y) plane
+        double vx_crr = x_(2);
+        double vy_crr = x_(3);
+        double ax = (vx_crr - x_prev_(2))/dt;
+        double ay = (vy_crr - x_prev_(3))/dt;
+
+        VectorXd acc = VectorXd(2);
+        acc << ax, ay;
+
+        // Control Matrix B
+        MatrixXd B = MatrixXd(4, 2);
+        B << 0.5*dt*dt, 0,
+                0,  0.5*dt*dt,
+                dt, 0,
+                0, dt;
+        std::cout <<"OLD X = \n" << x_ << std::endl;
+        x_ = x_ + B*acc;
+    }
+}
+
